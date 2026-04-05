@@ -66,8 +66,11 @@ export function persistTransactionsToStorage(transactions: Transaction[]): void 
   }
 }
 
+/** No stored value → default dark (deploy / first visit). Explicit `"false"` → light. */
 export function loadDarkModePreference(): boolean {
-  return storageGet(DARK_MODE_STORAGE_KEY) === "true";
+  const raw = storageGet(DARK_MODE_STORAGE_KEY);
+  if (raw === null) return true;
+  return raw === "true";
 }
 
 export function persistDarkModePreference(dark: boolean): void {

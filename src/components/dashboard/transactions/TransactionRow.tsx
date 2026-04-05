@@ -19,7 +19,7 @@ const TransactionRow = ({
   onDelete,
 }: Props) => (
   <motion.tr
-    initial={{ opacity: 0 }}
+    initial={false}
     animate={{ opacity: 1 }}
     transition={{ delay: rowIndex * 0.015 }}
     className="border-b border-border/10 last:border-0 hover:bg-muted/10 transition-all duration-300 group"

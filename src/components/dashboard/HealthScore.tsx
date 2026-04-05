@@ -28,9 +28,9 @@ const HealthScore = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={false}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="glass-card noise inner-glow p-5 flex flex-col items-center justify-center h-full w-full min-w-0"
     >
       <div className="relative w-32 h-32 mb-3">
@@ -42,16 +42,16 @@ const HealthScore = () => {
             strokeWidth="5"
             strokeLinecap="round"
             strokeDasharray={circumference}
-            initial={{ strokeDashoffset: circumference }}
+            initial={false}
             animate={{ strokeDashoffset: offset }}
-            transition={{ duration: 2, delay: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <motion.span
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={false}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.2, type: "spring" }}
+            transition={{ type: "spring", stiffness: 380, damping: 28 }}
             className="text-3xl font-display font-bold text-card-foreground"
           >
             {score}

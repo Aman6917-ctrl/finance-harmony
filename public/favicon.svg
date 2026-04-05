@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="FinFlow">
+  <defs>
+    <linearGradient id="ffg" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#ffg)"/>
+  <!-- simple finance "bars" mark -->
+  <path fill="#ffffff" fill-opacity="0.95" d="M8 20h3v6H8zm6.5-4h3v10h-3zM21 12h3v14h-3z"/>
+</svg>

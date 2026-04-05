@@ -84,12 +84,12 @@ const InsightsCards = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full min-w-0">
-      {cards.map((card, i) => (
+      {cards.map((card) => (
         <motion.div
           key={card.label}
-          initial={{ opacity: 0, y: 12 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.35 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="glass-card noise inner-glow p-4 cursor-default w-full min-w-0"
         >
           <div className="relative z-10 flex items-start gap-3">

@@ -20,6 +20,11 @@ const DashboardBackground = () => (
       className="fixed inset-0 pointer-events-none z-[1] bg-[radial-gradient(ellipse_85%_55%_at_50%_-8%,hsl(var(--primary)/0.09),transparent_58%)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_-5%,hsl(var(--primary)/0.14),transparent_52%)]"
       aria-hidden
     />
+    {/* Bottom wash — grounds the scroll */}
+    <div
+      className="fixed inset-x-0 bottom-0 h-[min(40vh,320px)] pointer-events-none z-[1] bg-gradient-to-t from-background/90 via-background/20 to-transparent dark:from-[hsl(222_48%_5%)] dark:via-transparent dark:to-transparent"
+      aria-hidden
+    />
   </>
 );
 

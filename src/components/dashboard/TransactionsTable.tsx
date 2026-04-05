@@ -43,15 +43,15 @@ const TransactionsTable = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="glass-card noise inner-glow relative overflow-hidden w-full min-w-0"
     >
       <TransactionToolbar onAddClick={openAdd} />
 
       {filteredTransactions.length === 0 ? (
-        <TransactionsEmptyState />
+        <TransactionsEmptyState onAdd={canManageTransactions ? openAdd : undefined} />
       ) : (
         <div className="overflow-x-auto custom-scroll relative z-10 w-full min-w-0">
           <table className="min-w-full w-full">

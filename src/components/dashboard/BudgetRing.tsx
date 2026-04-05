@@ -28,9 +28,9 @@ const BudgetRing = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="glass-card noise inner-glow p-6 w-full min-w-0"
     >
       <div className="relative z-10 flex items-center gap-3 mb-5">
@@ -44,12 +44,12 @@ const BudgetRing = () => {
       </div>
 
       <div className="relative z-10 space-y-4">
-        {budgetData.topCategories.map((cat, i) => (
+        {budgetData.topCategories.map((cat) => (
           <motion.div
             key={cat.name}
-            initial={{ opacity: 0, x: -10 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="flex items-center justify-between text-[12px] mb-1.5">
               <span className="font-medium text-card-foreground">{cat.name}</span>
@@ -63,9 +63,9 @@ const BudgetRing = () => {
                 style={{
                   backgroundColor: cat.pct > 80 ? "hsl(var(--expense))" : cat.pct > 50 ? "hsl(var(--warning))" : "hsl(var(--income))",
                 }}
-                initial={{ width: 0 }}
+                initial={false}
                 animate={{ width: `${cat.pct}%` }}
-                transition={{ duration: 1, delay: 0.8 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
           </motion.div>
@@ -80,9 +80,9 @@ const BudgetRing = () => {
         <div className="h-2.5 rounded-full bg-muted/60 overflow-hidden">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-primary to-primary-glow"
-            initial={{ width: 0 }}
+            initial={false}
             animate={{ width: `${budgetData.percentage}%` }}
-            transition={{ duration: 1.2, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
       </div>

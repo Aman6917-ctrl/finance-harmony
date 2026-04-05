@@ -22,7 +22,7 @@ const TransactionToolbar = ({ onAddClick }: Props) => {
   } = useDashboard();
 
   return (
-    <div className="relative z-10 p-5 border-b border-border/30 w-full min-w-0">
+    <div className="relative z-30 p-5 border-b border-border/30 w-full min-w-0">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full min-w-0">
         <div className="min-w-0">
           <h3 className="text-sm font-display font-bold text-card-foreground">All Transactions</h3>

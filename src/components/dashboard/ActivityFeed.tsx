@@ -24,9 +24,9 @@ const ActivityFeed = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="glass-card noise inner-glow p-5 h-full w-full min-w-0"
     >
       <div className="relative z-10 flex items-center justify-between mb-5">
@@ -45,12 +45,12 @@ const ActivityFeed = () => {
       </div>
 
       <div className="relative z-10 space-y-0.5">
-        {recent.map((tx, i) => (
+        {recent.map((tx) => (
           <motion.div
             key={tx.id}
-            initial={{ opacity: 0, x: -8 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-3 py-2.5 px-2.5 -mx-2.5 rounded-xl hover:bg-muted/20 transition-all duration-300 group cursor-default"
           >
             <div className="w-9 h-9 rounded-xl bg-muted/40 flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition-transform duration-300">

@@ -35,9 +35,9 @@ const SpendingChart = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="glass-card noise inner-glow p-6 w-full min-w-0"
     >
       <div className="relative z-10 flex items-center justify-between mb-5">
@@ -100,19 +100,19 @@ const SpendingChart = () => {
           </div>
 
           <div className="space-y-2 flex flex-col justify-center min-w-0 w-full">
-            {data.map((item, i) => {
+            {data.map((item, index) => {
               const pct = total > 0 ? ((item.value / total) * 100).toFixed(0) : "0";
               return (
                 <motion.div
                   key={item.name}
-                  initial={{ opacity: 0, x: 8 }}
+                  initial={false}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="flex items-center gap-2.5 py-1.5 px-2 -mx-2 rounded-lg hover:bg-muted/20 transition-colors cursor-default"
                 >
                   <div
                     className="w-2.5 h-2.5 rounded-md shrink-0"
-                    style={{ backgroundColor: COLORS[i % COLORS.length] }}
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
                   />
                   <span className="text-xs">{CATEGORY_EMOJIS[item.name] ?? "📦"}</span>
                   <span className="text-card-foreground font-medium flex-1 truncate text-[12px]">{item.name}</span>

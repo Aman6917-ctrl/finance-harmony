@@ -1,12 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +17,7 @@ import {
   type TransactionType,
   type Category,
 } from "@/context/DashboardContext";
+import { cn } from "@/lib/utils";
 
 export interface TransactionModalProps {
   open: boolean;
@@ -51,6 +46,11 @@ const TransactionModal = ({ open, onClose, onSave, transaction }: TransactionMod
   const [category, setCategory] = useState<Category>("Food");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState<TransactionType>("expense");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const resetFromProps = useCallback(() => {
     if (transaction) {
@@ -72,6 +72,24 @@ const TransactionModal = ({ open, onClose, onSave, transaction }: TransactionMod
     if (open) resetFromProps();
   }, [open, resetFromProps]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const desc = description.trim();
@@ -88,22 +106,50 @@ const TransactionModal = ({ open, onClose, onSave, transaction }: TransactionMod
     onClose();
   };
 
-  return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent
-        className="glass-card noise inner-glow w-full max-w-[min(28rem,calc(100vw-2rem))] sm:max-w-md border-primary/10 shadow-2xl p-0 gap-0 overflow-hidden sm:rounded-2xl"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+  if (!mounted || typeof document === "undefined") return null;
+  if (!open) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+      role="presentation"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+        aria-label="Close dialog"
+        onClick={onClose}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tx-modal-title"
+        className={cn(
+          "relative z-10 w-full max-w-[min(28rem,calc(100vw-2rem))] sm:max-w-md max-h-[min(90vh,calc(100dvh-2rem))] overflow-y-auto custom-scroll",
+          "glass-card noise inner-glow border-primary/10 shadow-2xl sm:rounded-2xl",
+        )}
+        onPointerDown={(e) => e.stopPropagation()}
       >
-        <DialogHeader className="px-5 pt-5 pb-4 border-b border-border/30 text-left space-y-1">
-          <DialogTitle className="font-display text-base tracking-tight">
-            {isEdit ? "Edit transaction" : "Add transaction"}
-          </DialogTitle>
-          <DialogDescription className="text-[11px] text-muted-foreground font-body">
-            {isEdit
-              ? "Update the fields below. Changes apply immediately after you save."
-              : "Enter details for a new income or expense entry."}
-          </DialogDescription>
-        </DialogHeader>
+        <div className="sticky top-0 z-20 flex items-start justify-between gap-3 px-5 pt-5 pb-4 border-b border-border/30 bg-card/95 backdrop-blur-md rounded-t-[inherit]">
+          <div className="space-y-1 min-w-0 text-left">
+            <h2 id="tx-modal-title" className="font-display text-base tracking-tight text-foreground">
+              {isEdit ? "Edit transaction" : "Add transaction"}
+            </h2>
+            <p className="text-[11px] text-muted-foreground font-body">
+              {isEdit
+                ? "Update the fields below. Changes apply immediately after you save."
+                : "Enter details for a new income or expense entry."}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="shrink-0 rounded-lg p-2 text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit} className="px-5 py-4 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -187,7 +233,7 @@ const TransactionModal = ({ open, onClose, onSave, transaction }: TransactionMod
             </div>
           </div>
 
-          <DialogFooter className="flex-row justify-end gap-2 pt-2 sm:space-x-0 border-t border-border/20 -mx-5 px-5 pb-1 mt-2">
+          <div className="flex flex-row justify-end gap-2 pt-2 border-t border-border/20 -mx-5 px-5 pb-1 mt-2">
             <Button
               type="button"
               variant="outline"
@@ -199,10 +245,11 @@ const TransactionModal = ({ open, onClose, onSave, transaction }: TransactionMod
             <Button type="submit" className="rounded-xl h-9 text-[12px] shadow-lg shadow-primary/15">
               {isEdit ? "Save changes" : "Add transaction"}
             </Button>
-          </DialogFooter>
+          </div>
         </form>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>,
+    document.body,
   );
 };
 

@@ -48,9 +48,9 @@ const Sparkline = ({ data, color, width = 80, height = 32 }: Props) => {
       <motion.path
         d={areaPath}
         fill={`url(#spark-${color})`}
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.25 }}
       />
       <motion.path
         d={path}
@@ -58,9 +58,9 @@ const Sparkline = ({ data, color, width = 80, height = 32 }: Props) => {
         stroke={color}
         strokeWidth={1.5}
         strokeLinecap="round"
-        initial={{ pathLength: 0 }}
+        initial={false}
         animate={{ pathLength: 1 }}
-        transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       />
       {data.length > 0 && (
         <motion.circle
@@ -73,9 +73,9 @@ const Sparkline = ({ data, color, width = 80, height = 32 }: Props) => {
           })()}
           r={2.5}
           fill={color}
-          initial={{ scale: 0 }}
+          initial={false}
           animate={{ scale: 1 }}
-          transition={{ delay: 1.4, type: "spring" }}
+          transition={{ type: "spring", stiffness: 400, damping: 24 }}
         />
       )}
     </svg>
